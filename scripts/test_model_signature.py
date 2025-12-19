@@ -34,6 +34,12 @@ def test_model_with_vectorizer(model_name, stage, vectorizer_path):
         input_df = pd.DataFrame(input_data.toarray(), columns=vectorizer.get_feature_names_out())  # <-- Use correct feature names
 
         # Predict using the model
+        print(f"Model Signature: {model.metadata.signature}")
+        print(f"Input DataFrame Dtypes: {input_df.dtypes}")
+        
+        # Ensure all data is float64 to match double schema
+        input_df = input_df.astype('float64')
+        
         prediction = model.predict(input_df)
 
         # Verify the input shape matches the vectorizer's feature output
