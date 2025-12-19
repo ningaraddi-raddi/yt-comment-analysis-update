@@ -11,22 +11,34 @@ export const getVideoId = (url) => {
 
 export const fetchComments = async (videoId) => {
     try {
-        const response = await axios.get(`${BASE_URL}/commentThreads`, {
-            params: {
-                part: 'snippet',
-                videoId: videoId,
-                key: API_KEY,
-                maxResults: 100, // Fetch up to 100 comments
-                textFormat: 'plainText',
-            }
-        });
+        let comments = [];
+        let nextPageToken = null;
 
-        return response.data.items.map(item => ({
-            text: item.snippet.topLevelComment.snippet.textDisplay,
-            timestamp: item.snippet.topLevelComment.snippet.publishedAt,
-            author: item.snippet.topLevelComment.snippet.authorDisplayName,
-            likeCount: item.snippet.topLevelComment.snippet.likeCount
-        }));
+        do {
+            const response = await axios.get(`${BASE_URL}/commentThreads`, {
+                params: {
+                    part: 'snippet',
+                    videoId: videoId,
+                    key: API_KEY,
+                    maxResults: 100,
+                    textFormat: 'plainText',
+                    pageToken: nextPageToken
+                }
+            });
+
+            const newComments = response.data.items.map(item => ({
+                text: item.snippet.topLevelComment.snippet.textDisplay,
+                timestamp: item.snippet.topLevelComment.snippet.publishedAt,
+                author: item.snippet.topLevelComment.snippet.authorDisplayName,
+                likeCount: item.snippet.topLevelComment.snippet.likeCount
+            }));
+
+            comments = [...comments, ...newComments];
+            nextPageToken = response.data.nextPageToken;
+
+        } while (nextPageToken);
+
+        return comments;
     } catch (error) {
         console.error('Error fetching comments:', error);
         throw error;

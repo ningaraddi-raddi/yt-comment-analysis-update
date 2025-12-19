@@ -4,7 +4,7 @@ import { Search, Loader2, BarChart2, MessageSquare, TrendingUp, PieChart, Filter
 import axios from 'axios';
 import { getVideoId, fetchComments } from './services/youtube';
 
-const BACKEND_URL = 'http://127.0.0.1:5000';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://my-elb-1764873155.ap-south-1.elb.amazonaws.com:80';
 
 function App() {
   const [url, setUrl] = useState('');
