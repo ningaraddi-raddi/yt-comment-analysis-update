@@ -8,12 +8,12 @@ import mlflow
 mlflow.set_tracking_uri("http://13.233.131.207/")
 
 @pytest.mark.parametrize("model_name, stage, holdout_data_path, vectorizer_path", [
-    ("yt_comment_sentiment_analysis", "staging", "data/interim/test_processed.csv", "tfidf_vectorizer.pkl"),  # Replace with your actual paths
+    ("yt_comment_sentiment_analysis", "Staging", "data/interim/test_processed.csv", "tfidf_vectorizer.pkl"),  # Replace with your actual paths
 ])
 def test_model_performance(model_name, stage, holdout_data_path, vectorizer_path):
     try:
         # Load the model from MLflow
-        client = mlflow.tracking.MlflowClient()
+        client = mlflow.MlflowClient()
         latest_version_info = client.get_latest_versions(model_name, stages=[stage])
         latest_version = latest_version_info[0].version if latest_version_info else None
 

@@ -36,7 +36,17 @@ def register_model(run_id: str, model_path: str, model_name: str):
     try:
         model_uri = f"runs:/{run_id}/{model_path}"
         result = mlflow.register_model(model_uri, model_name)
+        
+        # Transition the model to 'Staging' stage
+        client = mlflow.MlflowClient()
+        client.transition_model_version_stage(
+            name=model_name,
+            version=result.version,
+            stage="Staging"
+        )
+        
         logger.debug('Model registered with name: %s, version: %s', result.name, result.version)
+        logger.debug('Model transitioned to Staging stage')
         return result
     except Exception as e:
         logger.error('Error registering model: %s', e)

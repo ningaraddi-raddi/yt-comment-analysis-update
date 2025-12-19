@@ -6,7 +6,7 @@ from mlflow.tracking import MlflowClient
 mlflow.set_tracking_uri("http://13.233.131.207/")
 
 @pytest.mark.parametrize("model_name, stage", [
-    ("yt_comment_sentiment_analysis", "staging"),])
+    ("yt_comment_sentiment_analysis", "Staging"),])
 def test_load_latest_staging_model(model_name, stage):
     client = MlflowClient()
     

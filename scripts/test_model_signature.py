@@ -8,7 +8,7 @@ from mlflow.tracking import MlflowClient
 mlflow.set_tracking_uri("http://13.233.131.207/")
 
 @pytest.mark.parametrize("model_name, stage, vectorizer_path", [
-    ("yt_comment_sentiment_analysis", "staging", "tfidf_vectorizer.pkl"),  # Replace with your actual model name and vectorizer path
+    ("yt_comment_sentiment_analysis", "Staging", "tfidf_vectorizer.pkl"),  # Replace with your actual model name and vectorizer path
 ])
 def test_model_with_vectorizer(model_name, stage, vectorizer_path):
     client = MlflowClient()
