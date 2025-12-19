@@ -2,6 +2,7 @@ import json
 import logging
 import mlflow
 import os
+import sys
 
 # logging configuration
 logger = logging.getLogger('model_registration')
@@ -38,7 +39,7 @@ def register_model(run_id: str, model_path: str, model_name: str):
         result = mlflow.register_model(model_uri, model_name)
         
         # Transition the model to 'Staging' stage
-        client = mlflow.MlflowClient()
+        client = mlflow.MlflowClient(tracking_uri="http://13.233.131.207/")
         client.transition_model_version_stage(
             name=model_name,
             version=result.version,
@@ -74,6 +75,7 @@ def main():
     except Exception as e:
         logger.error("Failed to complete model registration: %s", e)
         print(f"Error: {e}")
+        sys.exit(1)
 
 if __name__ == '__main__':
     main()
