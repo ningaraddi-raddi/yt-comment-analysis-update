@@ -5,7 +5,7 @@ import pickle
 from mlflow.tracking import MlflowClient
 
 # Set your remote tracking URI
-mlflow.set_tracking_uri("http://127.0.0.1:5000/")
+mlflow.set_tracking_uri("http://13.233.131.207/")
 
 @pytest.mark.parametrize("model_name, stage, vectorizer_path", [
     ("yt_comment_sentiment_analysis", "staging", "tfidf_vectorizer.pkl"),  # Replace with your actual model name and vectorizer path

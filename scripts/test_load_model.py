@@ -3,7 +3,7 @@ import pytest
 from mlflow.tracking import MlflowClient
 
 # Set your remote tracking URI
-mlflow.set_tracking_uri("http://127.0.0.1:5000/")
+mlflow.set_tracking_uri("http://13.233.131.207/")
 
 @pytest.mark.parametrize("model_name, stage", [
     ("yt_comment_sentiment_analysis", "staging"),])
